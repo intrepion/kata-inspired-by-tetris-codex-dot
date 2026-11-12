@@ -21,3 +21,19 @@ MIT; see [LICENSE](LICENSE). The root `.gitignore` combines GitHub's global Linu
 ## Arcade metadata
 
 See [docs/arcade-metadata.md](docs/arcade-metadata.md) for the game-owned manifest and screenshot provenance.
+
+## GitHub Actions dependency locks
+
+`.github/workflows/actions.lock` records verified commits for workflow actions.
+After adding or changing a workflow action, regenerate and verify the lockfile:
+
+```sh
+gh extension install github/gh-actions-lock --pin v0.4.1
+gh actions-lock
+gh actions-lock --verify
+```
+
+Commit the updated workflows and lockfile together. The `verify-lockfile` check
+verifies coverage and upstream provenance on pull requests and pushes to `main`.
+For a fast offline coverage-only check, use `gh actions-lock --verify-local`.
+This does not enable repository-wide lockfile enforcement.
